@@ -4,6 +4,7 @@ $usuario_id = $_SESSION['usuario_id'];
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
@@ -12,11 +13,12 @@ $usuario_id = $_SESSION['usuario_id'];
 
   <title>TwitterPHP - Registre-se!</title>
 </head>
+
 <body style="margin:auto; width:300px; zoom:125%; background-image: url(img/bg.jpg); background-size: cover;">
-<h3 style="color: white;text-align: center; letter-spacing: 3px;">Twitter<br>
-	<span style="color: white; text-align: center; font-size: 9px; text-transform: uppercase;">Mude sua foto</span>
-	</h3>
-<?php
+  <h3 style="color: white;text-align: center; letter-spacing: 3px;">Twitter<br>
+    <span style="color: white; text-align: center; font-size: 9px; text-transform: uppercase;">Mude sua foto</span>
+  </h3>
+  <?php
 	if($usuario_id) {
 		if(isset($_GET['url_img'])) {
 			
@@ -116,4 +118,10 @@ $usuario_id = $_SESSION['usuario_id'];
 		}
 ?>
 </body>
+<script src="./js/utils.js"></script>
+<script>
+const divElement = document.querySelector(".alert");
+hideElement(divElement);
+</script>
+
 </html>
