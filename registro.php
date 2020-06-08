@@ -1,9 +1,10 @@
 <?php
 session_start();
-$usuario_id = $_SESSION['usuario_id'];
+$usuario_id = isset($_SESSION['usuario_id']);
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
@@ -12,13 +13,15 @@ $usuario_id = $_SESSION['usuario_id'];
 
   <title>TwitterPHP - Registre-se!</title>
 </head>
+
 <body style="margin:auto; width:300px; zoom:125%; background-image: url(img/bg.jpg); background-size: cover;">
   <form action="registro.php" method="POST" role="form" style="width:300px;">
     <h3 style="color: white;text-align: center; letter-spacing: 3px;">Twitter<br>
-    <span style="color: white; text-align: center; font-size: 9px; text-transform: uppercase;">Crie já sua conta</span>
-	</h3>
-<?php
-	if($_POST['btn'] == "submit-registro-formulario") {
+      <span style="color: white; text-align: center; font-size: 9px; text-transform: uppercase;">Crie já sua
+        conta</span>
+    </h3>
+    <?php
+	if(isset($_POST['btn']) && $_POST['btn'] == "submit-registro-formulario") {
 	  if($_POST['usuario'] != "" && $_POST['senha'] != "" && $_POST['confirmar-senha'] != "") {
 		if($_POST['senha'] == $_POST['confirmar-senha']) {
 			
@@ -58,7 +61,7 @@ $usuario_id = $_SESSION['usuario_id'];
 
 		  }
 		  else{
-			$error_msg="Usuário já existente. Tente novamente.";
+			$error_msg="Usuário já existente. Tente novamente com outro usuário.";
 			$resultado->close();
 			$conexao->close();
 		  }
@@ -74,21 +77,30 @@ $usuario_id = $_SESSION['usuario_id'];
 ?>
     <div class="input-group" style="margin-bottom:10px;">
       <span class="input-group-addon">@</span>
-      <input type="text" class="form-control" placeholder="Nome de usuário" name="usuario" value="<?php echo $_POST['usuario']; ?>">
+      <input type="text" class="form-control" placeholder="Nome de usuário" name="usuario"
+        value="<?php if(isset($_POST['usuario'])) echo $_POST['usuario'] ?>" required>
     </div>
-    <input type="password" style="margin-bottom:10px;" class="form-control" placeholder="Senha" name="senha">
-    <input type="password" style="margin-bottom:10px;" class="form-control" placeholder="Confirme a sua senha" name="confirmar-senha">
+    <input type="password" style="margin-bottom:10px;" class="form-control" placeholder="Senha" name="senha" required>
+    <input type="password" style="margin-bottom:10px;" class="form-control" placeholder="Confirme a sua senha"
+      name="confirmar-senha" required>
     <?php
-    if($error_msg){
-        echo "<div class='alert alert-danger' style='margin-bottom: 10px !important;'>".$error_msg."</div>";
+    if(isset($error_msg)){
+        echo "<div id='error-message' class='alert alert-danger' style='margin-bottom: 10px !important;'>".$error_msg."</div>";
     }
     ?>
-    <button type="submit" style="width:300px; margin-bottom:5px;" class="btn btn-warning" name="btn" value="submit-registro-formulario">Inscreva-se</button>
+    <button type="submit" style="width:300px; margin-bottom:5px;" class="btn btn-warning" name="btn"
+      value="submit-registro-formulario">Inscreva-se</button>
   </form>
   <div class="panel panel-default" style="margin-top: 10px !important;">
-  <div class="panel-body">
-    Você possui uma conta? <a href="index.php">Entrar »</a>
+    <div class="panel-body">
+      Você possui uma conta? <a href="index.php">Entrar »</a>
+    </div>
   </div>
-</div>
 </body>
+<script src="./js/utils.js"></script>
+<script>
+const errorMessage = document.getElementById("error-message");
+hideElement(errorMessage);
+</script>
+
 </html>
