@@ -4,7 +4,7 @@ $usuario_id = $_SESSION['usuario_id'];
 
 if($usuario_id){
 	if($_POST['tweet'] != ""){
-		$tweet = htmlentities($_POST['tweet']);
+		$tweet = $_POST['tweet'];
 		
 		if (strlen($tweet) > 140) {
 			echo "
@@ -37,21 +37,17 @@ if($usuario_id){
 		$usuario = $row['usuario'];
 		
 		$sql = "INSERT INTO tweets(usuario, usuario_id, tweet, tempoinicial) 
-				VALUES ('$usuario', '$usuario_id', '$tweet', $tempo)
-				";
-		
-		$resultado->close();		
+				VALUES ('$usuario', '$usuario_id', '$tweet', $tempo)";
+
 		$resultado = $conexao->query($sql);
-				
+		
 		$sql = "UPDATE usuarios
 				SET tweets = tweets + 1
 				WHERE id='$usuario_id'
 				";
 		
 		$resultado = $conexao->query($sql);
-		
-		
-        $conexao->close();
+		$conexao->close();
 		
 		header("Location: .");
 	}
