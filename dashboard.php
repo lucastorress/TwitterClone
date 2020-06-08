@@ -2,7 +2,9 @@
 if ($_SERVER['SCRIPT_NAME'] == "/dashboard.php") 
     { 
         header ("Location: ./");
-    } 
+		}
+
+$usuario_id = $_SESSION['usuario_id'];
 
 function getTime($tempo_inicial){
 	$tempo_run = time() - $tempo_inicial;
@@ -16,7 +18,7 @@ function getTime($tempo_inicial){
 		$tempo_final = $tempo_run." s";
 	return $tempo_final;
 }
-	if($usuario_id){
+	if(isset($usuario_id)){
 		include "config/conexao.php";
 		$sql = "SELECT usuario, seguidores, seguindo, tweets, url_img
                 FROM usuarios
@@ -92,10 +94,7 @@ function getTime($tempo_inicial){
 			echo "<div style='font-size:10px;float:right;'><a href='deletar/".$tweet['id']."'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></a></div>";
 			echo "</div>";
 		}
-		
-		$resultado->close();
-		$resultado_tweet->close();
-        $conexao->close();
+		$conexao->close();
 	}
 ?>
 <div class="panel panel-default" style="margin-top: 10px !important;">
